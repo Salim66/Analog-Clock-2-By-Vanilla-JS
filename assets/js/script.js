@@ -26,17 +26,17 @@ setInterval(()=> {
   ar_minute.style.transform = `rotate(${getKeyPos(minutes, 60)}deg)`;
   ar_second.style.transform = `rotate(${getKeyPos(seconds, 60)}deg)`;
 
-  sound.autoplay = true;
-  sound.load();
-
-
+  sound.play();
 
   // check whether the hours is less then 10
   let hr;
   if (time.getHours() > 12) {
     // set hours
     hr = `0${time.getHours() - 12}`;
-  } else {
+
+  } else if(time.getHours() < 10) {
+    hr = '0'+time.getHours();
+  }else {
     hr = time.getHours();
   }
 
@@ -64,6 +64,8 @@ setInterval(()=> {
 
 }, 1000);
 
+
+// set audio 
 setInterval(()=> {
   let time = new Date();
   
@@ -73,7 +75,7 @@ setInterval(()=> {
     // set hours
     hour = `${time.getHours() - 12}`;
   } else {
-    hr = time.getHours();
+    hour = time.getHours();
   }
 
   // check whether the minutes is less then 10
@@ -86,6 +88,7 @@ setInterval(()=> {
     min = time.getMinutes();
   }
 
+
   var utterThis = new SpeechSynthesisUtterance(`The time is ${hour} ${min}`);
 	synth.speak(utterThis);
 }, 10000);
@@ -97,12 +100,5 @@ function getKeyPos(current, range){
   return (current*360)/range;
 }
 
-function getRandomColor() {
-  let letters = '0123456789ABCDEF';
-  let color = '#';
-  for (var i = 0; i < 6; i++ ) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
+
 
